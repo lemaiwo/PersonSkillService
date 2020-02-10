@@ -1,0 +1,203 @@
+{
+  "definitions": {
+    "AdminsService": {
+      "kind": "service",
+      "@source": "srv/service.cds"
+    },
+    "AdminsService.Persons": {
+      "kind": "entity",
+      "@cds.persistence.name": "ADMINSSERVICE_PERSONS",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "be.wl.ui5con.Persons"
+            ]
+          }
+        }
+      },
+      "elements": {
+        "ID": {
+          "@cds.persistence.name": "ID",
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "Firstname": {
+          "@cds.persistence.name": "FIRSTNAME",
+          "type": "cds.String",
+          "length": 250
+        },
+        "Lastname": {
+          "@cds.persistence.name": "LASTNAME",
+          "type": "cds.String",
+          "length": 250
+        },
+        "Birthdate": {
+          "@cds.persistence.name": "BIRTHDATE",
+          "type": "cds.Date"
+        },
+        "Skills": {
+          "@cds.persistence.name": "SKILLS",
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "AdminsService.Skills",
+          "on": [
+            {
+              "ref": [
+                "Skills",
+                "Person"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      },
+      "$syntax": "projection"
+    },
+    "AdminsService.Skills": {
+      "kind": "entity",
+      "@cds.persistence.name": "ADMINSSERVICE_SKILLS",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "be.wl.ui5con.Skills"
+            ]
+          }
+        }
+      },
+      "elements": {
+        "ID": {
+          "@cds.persistence.name": "ID",
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "Person": {
+          "@cds.persistence.name": "PERSON",
+          "type": "cds.Association",
+          "target": "AdminsService.Persons",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "$generatedFieldName": "Person_ID"
+            }
+          ]
+        },
+        "SkillName": {
+          "@cds.persistence.name": "SKILLNAME",
+          "type": "cds.String",
+          "length": 250
+        },
+        "Score": {
+          "@cds.persistence.name": "SCORE",
+          "type": "cds.Integer"
+        },
+        "Person_ID": {
+          "@cds.persistence.name": "PERSON_ID",
+          "@odata.foreignKey4": "Person",
+          "type": "cds.Integer"
+        }
+      },
+      "$syntax": "projection"
+    },
+    "be.wl.ui5con.Persons": {
+      "kind": "entity",
+      "@cds.persistence.name": "BE_WL_UI5CON_PERSONS",
+      "elements": {
+        "ID": {
+          "@cds.persistence.name": "ID",
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "Firstname": {
+          "@cds.persistence.name": "FIRSTNAME",
+          "type": "cds.String",
+          "length": 250
+        },
+        "Lastname": {
+          "@cds.persistence.name": "LASTNAME",
+          "type": "cds.String",
+          "length": 250
+        },
+        "Birthdate": {
+          "@cds.persistence.name": "BIRTHDATE",
+          "type": "cds.Date"
+        },
+        "Skills": {
+          "@cds.persistence.name": "SKILLS",
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "be.wl.ui5con.Skills",
+          "on": [
+            {
+              "ref": [
+                "Skills",
+                "Person"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "be.wl.ui5con.Skills": {
+      "kind": "entity",
+      "@cds.persistence.name": "BE_WL_UI5CON_SKILLS",
+      "elements": {
+        "ID": {
+          "@cds.persistence.name": "ID",
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "Person": {
+          "@cds.persistence.name": "PERSON",
+          "type": "cds.Association",
+          "target": "be.wl.ui5con.Persons",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "$generatedFieldName": "Person_ID"
+            }
+          ]
+        },
+        "SkillName": {
+          "@cds.persistence.name": "SKILLNAME",
+          "type": "cds.String",
+          "length": 250
+        },
+        "Score": {
+          "@cds.persistence.name": "SCORE",
+          "type": "cds.Integer"
+        },
+        "Person_ID": {
+          "@cds.persistence.name": "PERSON_ID",
+          "@odata.foreignKey4": "Person",
+          "type": "cds.Integer"
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v1.21.1"
+  },
+  "$version": "1.0",
+  "@sql_mapping": "plain"
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="AdminsService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Persons" EntityType="AdminsService.Persons"/>
+        <EntitySet Name="Skills" EntityType="AdminsService.Skills"/>
+        <AssociationSet Name="Skills_Person" Association="AdminsService.Skills_Person">
+          <End Role="Skills" EntitySet="Skills"/>
+          <End Role="Persons" EntitySet="Persons"/>
+        </AssociationSet>
+      </EntityContainer>
+      <EntityType Name="Persons">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="Firstname" Type="Edm.String" MaxLength="250"/>
+        <Property Name="Lastname" Type="Edm.String" MaxLength="250"/>
+        <Property Name="Birthdate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <NavigationProperty Name="Skills" Relationship="AdminsService.Skills_Person" FromRole="Persons" ToRole="Skills"/>
+      </EntityType>
+      <EntityType Name="Skills">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+        <NavigationProperty Name="Person" Relationship="AdminsService.Skills_Person" FromRole="Skills" ToRole="Persons"/>
+        <Property Name="SkillName" Type="Edm.String" MaxLength="250"/>
+        <Property Name="Score" Type="Edm.Int32"/>
+        <Property Name="Person_ID" Type="Edm.Int32"/>
+      </EntityType>
+      <Association Name="Skills_Person">
+        <End Role="Skills" Type="AdminsService.Skills" Multiplicity="*"/>
+        <End Role="Persons" Type="AdminsService.Persons" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Persons">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Skills">
+            <PropertyRef Name="Person_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

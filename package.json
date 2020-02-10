@@ -1,0 +1,43 @@
+{
+  "name": "PersonSkillsServices",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/audit-logging": "^3.1.0",
+    "@sap/cds": "^3",
+    "@sap/xsenv": "^2.2.0",
+    "@sap/xssec": "^2.2.4",
+    "express": "^4",
+    "hdb": "^0.17.1",
+    "passport": "^0.4.1",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.13"
+  },
+  "scripts": {
+    "build": "cds build/all --clean",
+    "deploy": "cds deploy",
+    "start": "node v2server",
+    "startv4": "cds run"
+  },
+  "devDependencies": {
+    "sqlite3": "^4.1.1"
+  },
+  "cds": {
+    "requires": {
+      "uaa": {
+        "kind": "uaa"
+      },
+      "db": {
+        "kind": "sqlite",
+        "model": [
+          "db",
+          "srv"
+        ],
+        "credentials": {
+          "database": "my.db"
+        }
+      }
+    }
+  }
+}
